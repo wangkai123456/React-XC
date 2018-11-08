@@ -1,0 +1,33 @@
+.row {
+    .clear;
+    width: 100%;
+    &:before {
+        display: table;
+        content: " ";
+        box-sizing: border-box;
+    }
+}
+
+.clear {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+        box-sizing: border-box;
+    }
+}
+
+.generate-col(@n, @i: 1) when (@i =< @n) {
+    .row {
+        .col-@{i} {
+            float: left;
+            width: (@i * 100% / @n);
+            position: relative;
+            min-height: 1px;
+        }
+        .col-offset-@{i} {
+            left: (@i * 100% / @n);
+        }
+    }
+    .generate-col(@n, (@i + 1));
+}
