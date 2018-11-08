@@ -10,8 +10,9 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
         widget: []
     };
     public onDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        const widget = [...this.state.widget, e.dataTransfer.getData("text")];
         this.setState({
-            widget: [e.dataTransfer.getData("text")]
+            widget
         });
     };
 
