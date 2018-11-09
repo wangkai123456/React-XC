@@ -12,3 +12,23 @@
     height: 500px;
     border: 1px solid #999;
 }
+
+.edit-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    .edit-wrapper-del {
+        transition: all 0.8s;
+        opacity: 0;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        cursor: pointer;
+    }
+    &:hover {
+        border: 1px solid #1e90ff;
+        .edit-wrapper-del {
+            opacity: 1;
+        }
+    }
+}
