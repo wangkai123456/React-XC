@@ -1,8 +1,8 @@
 import * as React from "react";
-import Col from "src/components/Col";
 import ComList from "src/components/ComList";
 import DragContainer from "src/components/DragContainer";
-import Row from "src/components/Row";
+import Row from "src/common/Row";
+import Col from "src/common/Col";
 
 export class Index extends React.Component {
     public render() {

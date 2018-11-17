@@ -1,6 +1,7 @@
 import * as React from "react";
-import DrapWrapper from "./DragWrapper";
+
 import widgets from "../widget";
+import DrapWrapper from "./DragWrapper";
 
 export default class ComList extends React.Component {
     public render() {

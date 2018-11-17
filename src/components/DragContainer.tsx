@@ -4,15 +4,32 @@ import widgets from "../widget";
 import EditWrapper from "./EditWrapper";
 
 interface IOwnState {
-    widget: string[];
+    containerWidth: number;
     layout: GridLayout.Layout[];
+    widget: string[];
 }
 
 export default class DragContainer extends React.Component<{}, IOwnState> {
-    state: IOwnState = {
-        widget: ["example"],
-        layout: []
+    public state: IOwnState = {
+        containerWidth: 0,
+        layout: [],
+        widget: ["example"]
     };
+
+    public root: React.RefObject<HTMLDivElement>;
+
+    constructor(props: {}) {
+        super(props);
+        this.root = React.createRef();
+    }
+
+    public componentDidMount = () => {
+        const width = this.root.current ? this.root.current.offsetWidth : 800;
+        this.setState({
+            containerWidth: width
+        });
+    };
+
     public onDrop = (e: React.DragEvent<HTMLDivElement>) => {
         const widget = [...this.state.widget, e.dataTransfer.getData("text")];
         this.setState({
@@ -25,6 +42,7 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
         e.dataTransfer.effectAllowed = "copy";
     };
 
+    /**删除组件 */
     public deleteComponent = (index: number) => {
         this.setState(({ widget }) => {
             widget.splice(index, 1);
@@ -34,6 +52,16 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
         });
     };
 
+    /**锁定组件 */
+    public lockComponent = (index: number) => {
+        console.log(index);
+    };
+
+    /**编辑组件属性 */
+    public editComponent = (index: number) => {
+        console.log(index);
+    };
+
     public handleLayoutChange = (layout: GridLayout.Layout[]) => {
         this.setState({
             layout
@@ -41,24 +69,39 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
     };
 
     public render() {
-        const { widget } = this.state;
-        const { deleteComponent, handleLayoutChange } = this;
+        const { widget, containerWidth } = this.state;
+        const {
+            deleteComponent,
+            lockComponent,
+            editComponent,
+            handleLayoutChange,
+            root,
+            onDrop,
+            onDragOver
+        } = this;
+
         return (
             <div
-                onDrop={this.onDrop}
-                onDragOver={this.onDragOver}
+                onDrop={onDrop}
+                onDragOver={onDragOver}
                 className="drag-section"
+                ref={root}
             >
                 <GridLayout
                     className="layout"
                     cols={12}
                     rowHeight={30}
-                    width={600}
+                    width={containerWidth}
                     onLayoutChange={handleLayoutChange}
                 >
                     {widget.map((w, i) => (
                         <div key={i}>
-                            <EditWrapper index={i} onDel={deleteComponent}>
+                            <EditWrapper
+                                index={i}
+                                onDel={deleteComponent}
+                                onEdit={editComponent}
+                                onLock={lockComponent}
+                            >
                                 {widgets[w]}
                             </EditWrapper>
                         </div>

@@ -25,17 +25,21 @@
     position: relative;
     width: 100%;
     height: 100%;
-    .edit-wrapper-del {
+    .edit-wrapper-action {
         transition: all 0.8s;
         opacity: 0;
         position: absolute;
         bottom: 0px;
         left: 50%;
+        transform: translateX(-30px);
         cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        width: 60px;
     }
     &:hover {
         border: 1px solid #1e90ff;
-        .edit-wrapper-del {
+        .edit-wrapper-action {
             opacity: 1;
         }
     }
