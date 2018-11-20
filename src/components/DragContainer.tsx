@@ -13,7 +13,7 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
     public state: IOwnState = {
         containerWidth: 0,
         layout: [],
-        widget: ["example"]
+        widget: []
     };
 
     public root: React.RefObject<HTMLDivElement>;
@@ -52,11 +52,14 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
         });
     };
 
-    /**锁定组件 */
-    public lockComponent = (index: number) => {
+    /**切换组件锁定状态 */
+    public toggleComponentLock = (index: number) => {
         this.setState(({ layout }) => {
             const newLayout = layout.slice();
-            newLayout[index] = { ...newLayout[index], static: true };
+            newLayout[index] = {
+                ...newLayout[index],
+                static: !newLayout[index].static
+            };
             return {
                 layout: newLayout
             };
@@ -78,7 +81,7 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
         const { widget, containerWidth, layout } = this.state;
         const {
             deleteComponent,
-            lockComponent,
+            toggleComponentLock,
             editComponent,
             handleLayoutChange,
             root,
@@ -107,7 +110,7 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
                                 index={i}
                                 onDel={deleteComponent}
                                 onEdit={editComponent}
-                                onLock={lockComponent}
+                                onLock={toggleComponentLock}
                             >
                                 {widgets[w]}
                             </EditWrapper>
