@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./App.css";
 
-import { Index } from "./view/Index";
+import { Index } from "./views/Index";
 
 class App extends React.Component {
     public render() {

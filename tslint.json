@@ -9,6 +9,8 @@
         ]
     },
     "rules": {
-        "jsdoc-format": false
+        "jsdoc-format": false,
+        "no-console": [true, "error"],
+        "no-empty": [true, "allow-empty-functions"]
     }
 }

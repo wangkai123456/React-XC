@@ -29,7 +29,7 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
             containerWidth: width
         });
     };
-
+    /**拖拽完成 新增组件 */
     public onDrop = (e: React.DragEvent<HTMLDivElement>) => {
         const widget = [...this.state.widget, e.dataTransfer.getData("text")];
         this.setState({
@@ -54,7 +54,13 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
 
     /**锁定组件 */
     public lockComponent = (index: number) => {
-        console.log(index);
+        this.setState(({ layout }) => {
+            const newLayout = layout.slice();
+            newLayout[index] = { ...newLayout[index], static: true };
+            return {
+                layout: newLayout
+            };
+        });
     };
 
     /**编辑组件属性 */
@@ -69,7 +75,7 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
     };
 
     public render() {
-        const { widget, containerWidth } = this.state;
+        const { widget, containerWidth, layout } = this.state;
         const {
             deleteComponent,
             lockComponent,
@@ -92,6 +98,7 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
                     cols={12}
                     rowHeight={30}
                     width={containerWidth}
+                    layout={layout}
                     onLayoutChange={handleLayoutChange}
                 >
                     {widget.map((w, i) => (
