@@ -1,10 +1,16 @@
 import * as React from "react";
 
-export default class Example extends React.Component {
-    public static editProps = {
-        text: "input"
-    };
+class Example extends React.Component {
     public render() {
         return <div>Example Component</div>;
     }
 }
+
+const editProps = {
+    text: "input"
+};
+
+export default {
+    component: <Example />,
+    editProps
+};

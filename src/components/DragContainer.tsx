@@ -1,17 +1,20 @@
-import * as React from "react";
-import * as GridLayout from "react-grid-layout";
 import widgets from "../widget";
 import EditWrapper from "./EditWrapper";
 
+import * as React from "react";
+import * as GridLayout from "react-grid-layout";
+import Drawer from "src/common/Drawer";
+
 interface IOwnState {
     containerWidth: number;
+    editStatus: boolean;
     layout: GridLayout.Layout[];
     widget: string[];
 }
-
 export default class DragContainer extends React.Component<{}, IOwnState> {
     public state: IOwnState = {
         containerWidth: 0,
+        editStatus: false,
         layout: [],
         widget: []
     };
@@ -68,13 +71,27 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
 
     /**编辑组件属性 */
     public editComponent = (index: number) => {
-        console.log(index);
+        // const editProps = this.getEditProps(index);
+        this.setState(({ editStatus }) => ({
+            editStatus: true
+        }));
     };
+
+    public getEditProps(index: number) {
+        const compName = this.state.widget[index];
+        return widgets[compName].editProps;
+    }
 
     public handleLayoutChange = (layout: GridLayout.Layout[]) => {
         this.setState({
             layout
         });
+    };
+
+    public handleDrawerClose = () => {
+        this.setState(({ editStatus }) => ({
+            editStatus: false
+        }));
     };
 
     public render() {
@@ -112,11 +129,17 @@ export default class DragContainer extends React.Component<{}, IOwnState> {
                                 onEdit={editComponent}
                                 onLock={toggleComponentLock}
                             >
-                                {widgets[w]}
+                                {widgets[w].component}
                             </EditWrapper>
                         </div>
                     ))}
                 </GridLayout>
+                <Drawer
+                    visible={this.state.editStatus}
+                    onClose={this.handleDrawerClose}
+                >
+                    Edit Component Here
+                </Drawer>
             </div>
         );
     }

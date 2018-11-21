@@ -1,8 +1,11 @@
 import * as React from "react";
 
-export default class DrapWrapper extends React.Component {
+interface IOwnProps {
+    compName: string;
+}
+export default class DrapWrapper extends React.Component<IOwnProps> {
     public onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-        e.dataTransfer.setData("text/plain", "example");
+        e.dataTransfer.setData("text/plain", this.props.compName);
         e.dataTransfer.effectAllowed = "copy";
     };
     public render() {

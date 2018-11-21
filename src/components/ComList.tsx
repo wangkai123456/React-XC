@@ -6,14 +6,14 @@ import DrapWrapper from "./DragWrapper";
 export default class ComList extends React.Component {
     public render() {
         return (
-            <div>
+            <div className="drawer-wrapper-right">
                 组件列表
                 <div>
-                    <DrapWrapper>
-                        {Object.keys(widgets).map((w, i) => (
-                            <React.Fragment key={i}>{w}</React.Fragment>
-                        ))}
-                    </DrapWrapper>
+                    {Object.keys(widgets).map((w, i) => (
+                        <DrapWrapper compName={w} key={i}>
+                            {w}
+                        </DrapWrapper>
+                    ))}
                 </div>
             </div>
         );

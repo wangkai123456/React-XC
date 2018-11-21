@@ -10,7 +10,7 @@
     },
     "rules": {
         "jsdoc-format": false,
-        "no-console": [true, "error"],
+        "no-console": [false, "error"],
         "no-empty": [true, "allow-empty-functions"]
     }
 }
